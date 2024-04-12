@@ -3,31 +3,12 @@ import pandas
 import time
 from decisionTree import trainTestSplit, buildDecisionTree, decisionTreePredictions, calculateAccuracy
 
-dataFrame = pandas.read_csv("dataset_files/car_evaluation.csv")
+dataFrame = pandas.read_csv("dataset_files/breast_cancer.csv")
+dataFrame = dataFrame.drop("id", axis = 1)
+dataFrame = dataFrame[dataFrame.columns.tolist()[1: ] + dataFrame.columns.tolist()[0: 1]]
+dataFrameTrain, dataFrameTest = trainTestSplit(dataFrame, testSize = 0.25)
 
-buyingMapping = {"low": 1, "med": 2, "high": 3, "vhigh": 4}
-dataFrame["buying"] = dataFrame["buying"].map(buyingMapping)
-
-maintMapping = {"low": 1, "med": 2, "high": 3, "vhigh": 4}
-dataFrame["maint"] = dataFrame["maint"].map(maintMapping)
-
-doorsMapping = {"2": 2, "3": 3, "4": 4, "5more": 5}
-dataFrame["doors"] = dataFrame["doors"].map(doorsMapping)
-
-personsMapping = {"2": 2, "4": 4, "more": 6}
-dataFrame["persons"] = dataFrame["persons"].map(personsMapping)
-
-lugBootMapping = {"small": 1, "med": 2, "big": 3}
-dataFrame["lug_boot"] = dataFrame["lug_boot"].map(lugBootMapping)
-
-safetyMapping = {"low": 1, "med": 2, "high": 3}
-dataFrame["safety"] = dataFrame["safety"].map(safetyMapping)
-
-dataFrameTrain, dataFrameTest = trainTestSplit(dataFrame, testSize = 0.3)
-
-print("Decision Tree - Car Evaluation Dataset")
-
-#ftg
+print("Decision Tree - Breast Cancer Dataset")
 
 i = 1
 accuracyTrain = 0
